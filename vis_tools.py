@@ -9,14 +9,11 @@ from mpl_toolkits.mplot3d import Axes3D
 
 import numpy as np
 import pandas as pd
+import cv2
 
 from rotations import Quaternion, skew_symmetric
 
-def visualize_trajectory(df_values):
-    
-    # Convert dataframe into numpy array
-    list_of_pos = df_values.values.tolist()
-    trajectory = np.array(list_of_pos).T
+def visualize_trajectory(trajectory):
 
     #list for x, y and z values
     locX = list(trajectory[0,:])
@@ -96,10 +93,7 @@ def visualize_trajectory(df_values):
     plt.tight_layout()
     plt.show()
 
-def visualize_angles(rotations_df):
-    
-    list_of_rotations = rotations_df.values.tolist()
-    rotations = np.array(list_of_rotations).T
+def visualize_angles(rotations):
 
     #list to unpack roll, pitch, yaw angles
     roll = []
