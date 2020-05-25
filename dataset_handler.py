@@ -11,9 +11,11 @@ from operator import itemgetter
 
 class DatasetHandler:
 
-    def __init__(self, img_path):
+    def __init__(self, img_path, imu_df):
         # Define number of frames
         self.num_frames = 0
+        # Define reference dataframe to sync timestamps
+        self.imu = imu_df
 
         # Set up paths
         root_dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -59,7 +61,17 @@ class DatasetHandler:
         min_time = np.floor(np.amin(self.time_list))
 
         # Modify the timestamp column to seconds
-        self.images = [[np.round(t - min_time, 3), img] for t, img in self.images]
-        self.images_rgb = [[np.round(t - min_time, 3), img] for t, img in self.images_rgb]
+        self.images = [[np.round(t - min_time, 2), img] for t, img in self.images]
+        self.images_rgb = [[np.round(t - min_time, 2), img] for t, img in self.images_rgb]
+        self._sync_timestamp()
+
+    def _sync_timestamp(self):
+        list_of_inertias = self.imu.values.tolist()
+        imu_array = np.array(list_of_inertias).T
+        # Find the closest value for each timestamp in the images and replace it
+        for i in range(self.num_frames):
+            minArg = np.argmin(np.abs(imu_array[0,:] - self.images[i][0]))
+            self.images[i][0] = imu_array[0, minArg]
+            self.images_rgb[i][0] = imu_array[0, minArg]
 
 
