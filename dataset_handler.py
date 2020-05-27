@@ -74,4 +74,12 @@ class DatasetHandler:
             self.images[i][0] = imu_array[0, minArg]
             self.images_rgb[i][0] = imu_array[0, minArg]
 
+        # Use only every 8th element in the list to avoid too much info
+        #values_to_take = np.linspace(0, self.num_frames, num= self.num_frames / 8, endpoint = False, dtype = int)
+        #self.images = [self.images[i] for i in values_to_take]
+        #self.images_rgb = [self.images_rgb[i] for i in values_to_take]
+        #self.num_frames = len(self.images)
+        #print("Data loaded: {0} image frames".format(int(self.num_frames)), end="\r")
+
+
 
