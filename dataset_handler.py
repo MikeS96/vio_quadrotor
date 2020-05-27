@@ -43,7 +43,7 @@ class DatasetHandler:
             # nsecs is divided 1000000
             current_time = float(base_name.rsplit("secs_",2)[1].split('n')[0]) + float(base_name.rsplit("nsecs_",1)[1].split('.')[0])/1000000000
             # Inverted bits value, image is being wrongly readed
-            self.images.append([current_time, cv2.bitwise_not(cv2.imread(filename, 0))])
+            self.images.append([current_time, cv2.imread(filename, 0)])
             self.images_rgb.append([current_time, cv2.imread(filename)[:, :, ::-1]])
             self.time_list.append(current_time)
             self.num_frames += 1
