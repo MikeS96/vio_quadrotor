@@ -32,7 +32,7 @@ The file `rotations.py` is a class to handle rotations (quaternions) in a compre
 Below is given a set of images stores in the flying test. From left to right, Grayscale image, RGB image and Depth map for the same time-stamp.
 
 <div  align="center">
-<img src="./images/gray.png" width="240" /> <img src="./images/rgb.png" width="240" />  <img src="./images/depth.png" width="240" /> 
+<img src="./assets/gray.png" width="240" /> <img src="./assets/rgb.png" width="240" />  <img src="./assets/depth.png" width="240" /> 
 </div>
 
 **Note**: Only one flying test is provided owing to the size (around 5GB) of the files. If you want to download this repository please be patient. 
@@ -67,11 +67,11 @@ The content of the Notebook is arranged as follows:
 The next animations and images present the results of the system over a complex trajectory.  The animations presented are: VO with all observations, VIO with all observations, VO with only the 15% of the total observations, VIO with only the 15% of the total observations.
 
 <div  align="center">
-<img src="./images/vo_full.gif" width="280" /> <img src="./images/vio_full.gif" width="280" />  <img src="./images/vo_few.gif" width="280" />  <img src="./images/vio_few.gif" width="280" /> 
+<img src="./assets/vo_full.gif" width="320" /> <img src="./assets/vio_full.gif" width="320" />  <img src="./assets/vo_few.gif" width="320" />  <img src="./assets/vio_few.gif" width="320" /> 
 </div>
 
 Additionally, the following plots show how VIO techniques are capable to accurately estimate the position of the quad-rotor throughout the trajectory.
 
 <div  align="center">
-<img src="./images/vio_gt.png" width="280" />   <img src="./images/kg_full.png" width="280" />  
+<img src="./assets/vio_gt.png" width="280" />   <img src="./assets/kg_full.png" width="280" />  
 </div>
