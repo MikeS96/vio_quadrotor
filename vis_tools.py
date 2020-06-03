@@ -14,8 +14,15 @@ import cv2
 from rotations import Quaternion, skew_symmetric
 
 def visualize_trajectory(trajectory, title = "Vehicle's trajectory"):
+    """
+    Plot the vehicle's trajectory
 
-    #list for x, y and z values
+    :param trajectory: Numpy array (3 x M) where M is the number of samples
+        with the trayectory of the vehicle.
+    :param title: Name of the plot
+    """
+
+    # lists for x, y and z values
     locX = list(trajectory[0,:])
     locY = list(trajectory[1,:])
     locZ = list(trajectory[2,:])
@@ -43,12 +50,11 @@ def visualize_trajectory(trajectory, title = "Vehicle's trajectory"):
     toffset = 1.0
     
     # Actual trajectory plotting ZX
-    
     ZX_plt.set_title("Trajectory (X, Z)", y=toffset)
     ZX_plt.plot(locX, locZ, "--", label="Trajectory", zorder=1, linewidth=1.5, markersize=2)
     ZX_plt.set_xlabel("X [m]")
     ZX_plt.set_ylabel("Z [m]")
-    # Plot camera initial location
+    # Plot vehicle initial location
     ZX_plt.scatter([0], [0], s=8, c="green", label="Start location", zorder=2)
     ZX_plt.scatter(locX[-1], locZ[-1], s=8, c="red", label="End location", zorder=2)
     ZX_plt.set_xlim([minX, maxX])
@@ -94,13 +100,21 @@ def visualize_trajectory(trajectory, title = "Vehicle's trajectory"):
     plt.show()
 
 def visualize_angles(rotations, title = "Vehicle's euler angles"):
+    """
+    Plot the vehicle's orientation (Euler angles)
 
-    #list to unpack roll, pitch, yaw angles
+    :param rotations: Numpy array (4 x M) where M is the number of samples. 
+        This variable has a Quaternion at each time-step.
+    :param title: Name of the plot
+    """
+
+    # lists to unpack roll, pitch, yaw angles
     roll = []
     pitch = []
     yaw = []
     x_axis = np.arange(rotations.shape[1])
-    
+
+    # Transform Quaternion into Euler angle representation
     for i in range(0, rotations.shape[1]):
         current_rot = rotations[:, i]
         q = Quaternion(*current_rot).to_euler()
@@ -132,19 +146,18 @@ def visualize_angles(rotations, title = "Vehicle's euler angles"):
     
     toffset = 1.0
     
-    # Roll Trajectory
-    
+    # Roll angle
     R_plt.set_title(r'Roll angle $\theta$', y=toffset)
     R_plt.plot(x_axis, roll, "-", label="Angle", zorder=1, linewidth=1.5, markersize=2)
     R_plt.axes.xaxis.set_ticklabels([])
     R_plt.set_ylabel("Roll [rads]")
-    # Plot camera initial location
+    # Plot vehicle initial orientation
     R_plt.scatter([0], [0], s=8, c="green", label="Start location", zorder=2)
     R_plt.scatter(x_axis[-1], roll[-1], s=8, c="red", label="End location", zorder=2)
     R_plt.set_xlim([minX, maxX])
     R_plt.set_ylim([minR, maxR])
         
-    # Pitch Trajectory
+    # Pitch angle
     P_plt.set_title(r'Pitch angle $\beta$', y=toffset)
     P_plt.set_ylabel("Roll [rads]")
     P_plt.axes.xaxis.set_ticklabels([])
@@ -154,7 +167,7 @@ def visualize_angles(rotations, title = "Vehicle's euler angles"):
     P_plt.set_xlim([minX, maxX])
     P_plt.set_ylim([minP, maxP])
     
-    # Yaw Trajectory
+    # Yaw angle
     Y_plt.set_title(r'Yaw angle $\gamma$', y=toffset)
     Y_plt.set_ylabel("Yaw [rads]")
     Y_plt.axes.xaxis.set_ticklabels([])
@@ -171,6 +184,15 @@ def visualize_angles(rotations, title = "Vehicle's euler angles"):
     plt.show()
 
 def visualize_camera_movement(image1, image1_points, image2, image2_points, is_show_img_after_move=False):
+    """
+    Plot the camera movement between two consecutive image frames
+
+    :param image1: First image at time stamp t
+    :param image1_points: Feature vector for the first image
+    :param image2: First image at time stamp t + 1
+    :param image2_points: Feature vectir for the second image
+    :param is_show_img_after_move: Bool variable to plot movement or not
+    """
     image1 = image1.copy()
     image2 = image2.copy()
     
@@ -193,6 +215,15 @@ def visualize_camera_movement(image1, image1_points, image2, image2_points, is_s
         return image1
 
 def compare_3d(ground_truth, trajectory, title):
+    """
+    Plot the vehicle's trajectory in 3D space
+
+    :param ground_truth: Numpy array (3 x M) where M is the number of samples
+        with the ground truth trayectory of the vehicle.
+    :param trajectory: Numpy array (3 x M) where M is the number of samples
+        with the estimated trajectory of the vehicle.
+    :param title: Name of the plot
+    """
 
 	# Axis limits
 	maxX = np.amax(trajectory[0,:]) + 1
@@ -218,11 +249,21 @@ def compare_3d(ground_truth, trajectory, title):
 	plt.show()
 
 def compare_2d_trajectory(ground_truth, trajectory, title = "VO vs Ground Truth Trajectory"):
+    """
+    Plot the comparison between the vehicle's ground truth trajectory and the estimated trajectory
 
-    #list for x, y and z values
+    :param ground_truth: Numpy array (3 x M) where M is the number of samples
+        with the ground truth trayectory of the vehicle.
+    :param trajectory: Numpy array (3 x M) where M is the number of samples
+        with the estimated trajectory of the vehicle.
+    :param title: Name of the plot
+    """
+
+    # lists for x, y and z values estimation
     locX = list(trajectory[0,:])
     locY = list(trajectory[1,:])
     locZ = list(trajectory[2,:])
+    # lists for x, y and z values ground truth
     locX_gt = list(ground_truth[0,:])
     locY_gt = list(ground_truth[1,:])
     locZ_gt = list(ground_truth[2,:])
@@ -250,13 +291,12 @@ def compare_2d_trajectory(ground_truth, trajectory, title = "VO vs Ground Truth 
     toffset = 1.0
     
     # Actual trajectory plotting ZX
-    
     ZX_plt.set_title("Trajectory (X, Z)", y=toffset)
     ZX_plt.plot(locX_gt, locZ_gt, "--", label="Trajectory GT", zorder=1, linewidth=1.5, markersize=2)
     ZX_plt.plot(locX, locZ, "--", label="Trajectory Estimated", zorder=1, linewidth=1.5, markersize=2)
     ZX_plt.set_xlabel("X [m]")
     ZX_plt.set_ylabel("Z [m]")
-    # Plot camera initial location
+    # Plot initial position
     ZX_plt.scatter([0], [0], s=8, c="green", label="Start location", zorder=2)
     ZX_plt.scatter(locX[-1], locZ[-1], s=8, c="purple", label="End location Estimation", zorder=2)
     ZX_plt.scatter(locX_gt[-1], locZ_gt[-1], s=8, c="red", label="End location GT", zorder=2)
@@ -309,6 +349,15 @@ def compare_2d_trajectory(ground_truth, trajectory, title = "VO vs Ground Truth 
     plt.show()
 
 def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angles"):
+    """
+    Plot the comparison between the vehicle's ground truth orientation and the estimated orientation
+
+    :param ground_truth: Numpy array (4 x M) where M is the number of samples. 
+        This variable has a Quaternion at each time-step and this is the ground truth.
+    :param trajectory: Numpy array (4 x M) where M is the number of samples. 
+        This variable has a Quaternion at each time-step and this is the estimated orientation.
+    :param title: Name of the plot
+    """
 
     # list to unpack roll, pitch, yaw angles from the ground truth
     roll = []
@@ -318,6 +367,7 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     roll_es = []
     pitch_es = []
     yaw_es = []
+    # X axis
     x_axis = np.arange(ground_truth.shape[1])
     x_axis_es = np.arange(rotations.shape[1])
     
@@ -373,28 +423,27 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     
     toffset = 1.0
     
-    # Roll Trajectory
-    
+    # Roll Orientation
     R_plt.set_title(r'Roll angle GT $\theta$', y=toffset)
     R_plt.plot(x_axis, roll, "-", label="Angle GT", zorder=1, linewidth=1.5, markersize=2)
     R_plt.set_ylabel("Roll [rads]")
-    # Plot camera initial location
+    # Plot initial location
     R_plt.scatter([0], [0], s=8, c="green", label="Start location", zorder=2)
     R_plt.scatter(x_axis[-1], roll[-1], s=8, c="red", label="End location", zorder=2)
     R_plt.set_xlim([minX, maxX])
     R_plt.set_ylim([minR, maxR])
 
-    # Roll Trajectory estimated
+    # Roll Orientation estimated
     R_plt_es.set_title(r'Roll angle Estimated $\theta$', y=toffset)
     R_plt_es.plot(x_axis_es, roll_es, "-", c="orange", label="Angle Estimated", zorder=1, linewidth=1.5, markersize=2)
     R_plt_es.axes.xaxis.set_ticklabels([])
-    # Plot camera initial location
+    # Plot initial location
     R_plt_es.scatter([0], [0], s=8, c="blue", label="Start location", zorder=2)
     R_plt_es.scatter(x_axis_es[-1], roll_es[-1], s=8, c="purple", label="End location", zorder=2)
     R_plt_es.set_xlim([minX_es, maxX_es])
     R_plt_es.set_ylim([minR_es, maxR_es])
         
-    # Pitch Trajectory
+    # Pitch Orientation
     P_plt.set_title(r'Pitch angle GT $\beta$', y=toffset)
     P_plt.set_ylabel("Roll [rads]")
     P_plt.axes.xaxis.set_ticklabels([])
@@ -404,7 +453,7 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     P_plt.set_xlim([minX, maxX])
     P_plt.set_ylim([minP, maxP])
 
-    # Pitch Trajectory estimated
+    # Pitch Orientation estimated
     P_plt_es.set_title(r'Pitch angle Estimated $\beta$', y=toffset)
     P_plt_es.axes.xaxis.set_ticklabels([])
     P_plt_es.plot(x_axis_es, pitch_es, "-", linewidth=1.5, c="orange", label="Angle Estimated", markersize=2, zorder=1)
@@ -424,7 +473,7 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     Y_plt.set_ylim([minY, maxY])
     Y_plt.legend(loc=4, title="Legend", borderaxespad=0., fontsize="medium", frameon=True)
 
-    # Yaw Trajectory estimated
+    # Yaw Orientation estimated
     Y_plt_es.set_title(r'Yaw angle Estimated $\gamma$', y=toffset)
     Y_plt_es.axes.xaxis.set_ticklabels([])
     Y_plt_es.plot(x_axis_es, yaw_es, "-", linewidth=1.5, c="orange", label="Angle Estimated", markersize=2, zorder=1)
@@ -440,6 +489,17 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     plt.show()
 
 def compare_3d_all(ground_truth, trajectory_vo, trajectory_vio, title):
+    """
+    Plot the vehicle's trajectory in 3D space for the ground truth, VO and VIO estimates
+
+    :param ground_truth: Numpy array (3 x M) where M is the number of samples
+        with the ground truth trayectory of the vehicle.
+    :param trajectory_vo: Numpy array (3 x M) where M is the number of samples
+        with the estimated VO trajectory of the vehicle.
+    :param trajectory_vio: Numpy array (3 x M) where M is the number of samples
+        with the estimated VIO trajectory of the vehicle.
+    :param title: Name of the plot
+    """
 
 	# Axis limits
 	maxX = np.amax(ground_truth[0,:]) + 5
