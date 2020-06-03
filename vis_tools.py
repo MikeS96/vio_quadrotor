@@ -209,7 +209,7 @@ def compare_3d(ground_truth, trajectory, title):
 	ax.set_xlabel('X [m]')
 	ax.set_ylabel('Y [m]')
 	ax.set_zlabel('Z [m]')
-	ax.set_title(title)
+	ax.set_title(title, y = 1.0)
 	ax.legend()
 	ax.set_xlim(minX, maxX)
 	ax.set_ylim(minY, maxY)
@@ -228,12 +228,12 @@ def compare_2d_trajectory(ground_truth, trajectory, title = "VO vs Ground Truth 
     locZ_gt = list(ground_truth[2,:])
     
     # Axis limits
-    maxX = np.amax(locX) + 1
-    minX = np.amin(locX) - 1
-    maxY = np.amax(locY) + 1
-    minY = np.amin(locY) - 1 
-    maxZ = np.amax(locZ) + 1
-    minZ = np.amin(locZ) - 1
+    maxX = np.amax(locX) + 5
+    minX = np.amin(locX) - 5
+    maxY = np.amax(locY) + 5
+    minY = np.amin(locY) - 5 
+    maxZ = np.amax(locZ) + 5
+    minZ = np.amin(locZ) - 5
 
     # Set styles
     mpl.rc("figure", facecolor="white")
@@ -438,3 +438,29 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     fig.suptitle(title, fontsize=16, y = 1.05)
     plt.tight_layout()
     plt.show()
+
+def compare_3d_all(ground_truth, trajectory_vo, trajectory_vio, title):
+
+	# Axis limits
+	maxX = np.amax(ground_truth[0,:]) + 5
+	minX = np.amin(ground_truth[0,:]) - 5
+	maxY = np.amax(ground_truth[1,:]) + 5
+	minY = np.amin(ground_truth[1,:]) - 5 
+	maxZ = np.amax(ground_truth[2,:]) + 5
+	minZ = np.amin(ground_truth[2,:]) - 5
+
+	est_traj_fig = plt.figure()
+	ax = est_traj_fig.add_subplot(111, projection='3d')
+	ax.plot(ground_truth[0,:], ground_truth[1,:], ground_truth[2,:], "-", label='Ground Truth')
+	ax.plot(trajectory_vo[0,:], trajectory_vo[1,:], trajectory_vo[2,:], "-", label='VO Estimate')
+	ax.plot(trajectory_vio[0,:], trajectory_vio[1,:], trajectory_vio[2,:], "-", label='VIO Estimate')
+	ax.set_xlabel('X [m]')
+	ax.set_ylabel('Y [m]')
+	ax.set_zlabel('Z [m]')
+	ax.set_title(title, y = 1.0)
+	ax.legend()
+	ax.set_xlim(minX, maxX)
+	ax.set_ylim(minY, maxY)
+	ax.set_zlim(minZ, maxZ)
+	plt.tight_layout()
+	plt.show()
