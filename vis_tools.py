@@ -215,23 +215,23 @@ def visualize_camera_movement(image1, image1_points, image2, image2_points, is_s
         return image1
 
 def compare_3d(ground_truth, trajectory, title):
-    """
-    Plot the vehicle's trajectory in 3D space
+	"""
+	Plot the vehicle's trajectory in 3D space
 
-    :param ground_truth: Numpy array (3 x M) where M is the number of samples
-        with the ground truth trayectory of the vehicle.
-    :param trajectory: Numpy array (3 x M) where M is the number of samples
-        with the estimated trajectory of the vehicle.
-    :param title: Name of the plot
-    """
+	:param ground_truth: Numpy array (3 x M) where M is the number of samples
+	    with the ground truth trayectory of the vehicle.
+	:param trajectory: Numpy array (3 x M) where M is the number of samples
+	    with the estimated trajectory of the vehicle.
+	:param title: Name of the plot
+	"""
 
 	# Axis limits
-	maxX = np.amax(trajectory[0,:]) + 1
-	minX = np.amin(trajectory[0,:]) - 1
-	maxY = np.amax(trajectory[1,:]) + 1
-	minY = np.amin(trajectory[1,:]) - 1 
-	maxZ = np.amax(trajectory[2,:]) + 1
-	minZ = np.amin(trajectory[2,:]) - 1
+	maxX = np.amax(trajectory[0,:]) + 5
+	minX = np.amin(trajectory[0,:]) - 5
+	maxY = np.amax(trajectory[1,:]) + 5
+	minY = np.amin(trajectory[1,:]) - 5 
+	maxZ = np.amax(trajectory[2,:]) + 5
+	minZ = np.amin(trajectory[2,:]) - 5
 
 	est_traj_fig = plt.figure()
 	ax = est_traj_fig.add_subplot(111, projection='3d')
@@ -489,17 +489,17 @@ def compare_2d_angles(ground_truth, rotations, title = "VO vs Ground Truth angle
     plt.show()
 
 def compare_3d_all(ground_truth, trajectory_vo, trajectory_vio, title):
-    """
-    Plot the vehicle's trajectory in 3D space for the ground truth, VO and VIO estimates
+	"""
+	Plot the vehicle's trajectory in 3D space for the ground truth, VO and VIO estimates
 
-    :param ground_truth: Numpy array (3 x M) where M is the number of samples
-        with the ground truth trayectory of the vehicle.
-    :param trajectory_vo: Numpy array (3 x M) where M is the number of samples
-        with the estimated VO trajectory of the vehicle.
-    :param trajectory_vio: Numpy array (3 x M) where M is the number of samples
-        with the estimated VIO trajectory of the vehicle.
-    :param title: Name of the plot
-    """
+	:param ground_truth: Numpy array (3 x M) where M is the number of samples
+	    with the ground truth trayectory of the vehicle.
+	:param trajectory_vo: Numpy array (3 x M) where M is the number of samples
+	    with the estimated VO trajectory of the vehicle.
+	:param trajectory_vio: Numpy array (3 x M) where M is the number of samples
+	    with the estimated VIO trajectory of the vehicle.
+	:param title: Name of the plot
+	"""
 
 	# Axis limits
 	maxX = np.amax(ground_truth[0,:]) + 5
