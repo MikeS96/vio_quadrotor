@@ -15,7 +15,7 @@ The system works by taking subsequent image pairs and matching features througho
 All the flying samples were taken from a Gazebo-based simulation with a DJI F450 model. From each flying test Grayscale, RGB and depth maps were obtained at 5 FPS. Additionally, the IMU data is provided to allow the use of the Error-State Extended Kalman Filter for Visual Intertial Odometry. Ground truth data is given to assess the performance of the pipeline.
 
 <div  align="center">
-<img src="./assets/world.png" width="320" />
+<img src="./assets/world.png" width="380" />
 </div>
 
 This repository contains four python files which are:
@@ -73,10 +73,10 @@ The next animations and images present the results of the system over a complex 
 Additionally, the following plots show how VIO techniques are capable to accurately estimate the position of the quad-rotor throughout the trajectory.
 
 <div  align="center">
-<img src="./assets/vio_gt.png" width="280" />   
+<img src="./assets/vio_gt.png" width="360" />   
 </div>
 
 <div  align="center">
-<img src="./assets/kf_full.png" width="280" />   
+<img src="./assets/kf_full.png" width="360" />   
 </div>
  
