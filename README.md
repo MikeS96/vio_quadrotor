@@ -73,5 +73,10 @@ The next animations and images present the results of the system over a complex 
 Additionally, the following plots show how VIO techniques are capable to accurately estimate the position of the quad-rotor throughout the trajectory.
 
 <div  align="center">
-<img src="./assets/vio_gt.png" width="280" />   <img src="./assets/kf_full.png" width="280" />  
+<img src="./assets/vio_gt.png" width="280" />   
 </div>
+
+<div  align="center">
+<img src="./assets/kf_full.png" width="280" />   
+</div>
+ 
