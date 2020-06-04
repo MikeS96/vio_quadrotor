@@ -2,7 +2,7 @@
 
 # Stereo Visual Odometry (VO) and Visual Inertial Odometry (VIO) with an Error-State Extended Kalman Filter in a quad-rotor
 
-This repository is intended to provide complete VO and VIO pipelines for a quad-rotor. 
+This repository is intended to provide a complete VO and VIO pipelines for a quad-rotor. 
 
 <div  align="center">
 <img src="./assets/vio_full.gif" width="380" />
